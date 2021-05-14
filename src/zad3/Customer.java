@@ -10,7 +10,7 @@ public class Customer {
     private ShoppingCart shoppingCart;
 
     public Customer(String name, int cash) {
-        this.parametrize(name, (double) cash);
+        this.parametrize(name, cash);
     }
 
     public Customer(String name, double cash) {
@@ -24,8 +24,7 @@ public class Customer {
         this.shoppingCart = new ShoppingCart(this);
     }
 
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
 
@@ -33,26 +32,24 @@ public class Customer {
         this.shoppingCart.putInsideFlower(flower);
     }
 
-    public ShoppingCart getShoppingCart()
-    {
+    public ShoppingCart getShoppingCart() {
         return this.shoppingCart;
     }
 
-    public void pay()
-    {
+    public void pay() {
         ShoppingCart newCart = new ShoppingCart(this);
         PriceList priceList = PriceList.getInstance();
 
-        for(Flower flower : this.shoppingCart.getContents()) {
-            try{
+        for (Flower flower : this.shoppingCart.getContents()) {
+            try {
                 double pricePerFlower = priceList.getPrice(flower);
                 double pricePerFlowerPack = flower.getQuantity() * pricePerFlower;
 
-                if(this.cash - pricePerFlowerPack >= 0) {
+                if (this.cash - pricePerFlowerPack >= 0) {
                     this.cash -= pricePerFlowerPack;
                     newCart.putInsideFlower(flower);
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
             }
         }
 
