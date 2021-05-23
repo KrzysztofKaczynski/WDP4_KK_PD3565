@@ -1,6 +1,7 @@
 package zad3;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Map;
  */
 public class PriceList {
     private static PriceList instance = null;
-    private Map<String, Double> flowerMap = new HashMap<String, Double>();
+    private Map<String, Double> flowerMap = new HashMap<>();
 
     private PriceList() {
 
@@ -18,7 +19,6 @@ public class PriceList {
         if (instance == null) {
             instance = new PriceList();
         }
-
         return instance;
     }
 
@@ -26,13 +26,25 @@ public class PriceList {
         this.flowerMap.put(flowerName, price);
     }
 
-    public double getPrice(Flower flower) throws Exception {
+    public double getPrice(Flower flower) {
         String name = flower.getName();
-
-        if (this.flowerMap.containsKey(name) == false) {
-            throw new Exception("Missing Flower");
+        //AG: lepiej od razu zwróciæ -1.0 ni¿ rzucaæ wyj¹tek i obs³ugiwaæ go w try/catch. Tak proœciej i przejrzyœciej.
+        if (!flowerMap.containsKey(name)) {
+            return -1.0;
         }
+        return flowerMap.get(name);
+    }
 
-        return this.flowerMap.get(name);
+    public double getPriceOfFlowerWithSpecificColour(List<Flower> flowers, String color) {
+        int sum = 0;
+        for (Flower flower : flowers) {
+            //AG: ³atwiej zrobiæ na warunku gdy kolor siê zgadza. Dodatkowo ignoreCase powoduje ¿e wielkoœæ liter nie ma znaczenia
+            if (flower.getColour().equalsIgnoreCase(color)) {
+                double pricePerFlower = getPrice(flower);
+                double pricePerFlowerPack = flower.getQuantity() * pricePerFlower;
+                sum += pricePerFlowerPack;
+            }
+        }
+        return sum;
     }
 }

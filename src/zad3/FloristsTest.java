@@ -1,31 +1,21 @@
 /**
- * @author Kaczyński Krzysztof PD3565
+ *
+ *  @author Kaczyński Krzysztof PD3565
+ *
  */
 
 package zad3;
 
 
+import java.util.List;
+
 public class FloristsTest {
     // definicja metody sumowania wartosci kwiatów o podanym kolorze
     static int valueOf(Box box, String color) {
         PriceList priceList = PriceList.getInstance();
-        int sum = 0;
+        List<Flower> flowers = box.getContents();
+        return (int) priceList.getPriceOfFlowerWithSpecificColour(flowers, color);
 
-        for (Flower flower : box.getContents()) {
-            if (!flower.getColour().equals(color)) {
-                continue;
-            }
-
-            try {
-                double pricePerFlower = priceList.getPrice(flower);
-                double pricePerFlowerPack = flower.getQuantity() * pricePerFlower;
-
-                sum += pricePerFlowerPack;
-            } catch (Exception e) {
-              e.printStackTrace();
-            }
-        }
-        return sum;
     }
 
     public static void main(String[] args) {
@@ -75,7 +65,8 @@ public class FloristsTest {
         System.out.println(pudelkoJanka);
 
         // Zobaczmy jaka jest wartość czerwonych kwiatów w pudełku Janka
-        System.out.println("Czerwone kwiaty w pudełku Janka kosztowały: " + valueOf(pudelkoJanka, "czerwony"));
+        System.out.println("Czerwone kwiaty w pudełku Janka kosztowały: "
+                + valueOf(pudelkoJanka, "czerwony"));
 
         // Teraz przychodzi Stefan
         // ma tylko 60 zł

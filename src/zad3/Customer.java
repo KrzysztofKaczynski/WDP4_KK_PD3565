@@ -9,19 +9,10 @@ public class Customer {
 
     private ShoppingCart shoppingCart;
 
-    public Customer(String name, int cash) {
-        this.parametrize(name, cash);
-    }
-
     public Customer(String name, double cash) {
-        this.parametrize(name, cash);
-    }
-
-    private void parametrize(String name, double cash) {
         this.name = name;
         this.cash = cash;
-
-        this.shoppingCart = new ShoppingCart(this);
+        shoppingCart = new ShoppingCart(this);
     }
 
     public String getName() {
@@ -29,31 +20,34 @@ public class Customer {
     }
 
     public void get(Flower flower) {
-        this.shoppingCart.putInsideFlower(flower);
+        shoppingCart.putInsideFlower(flower);
     }
 
     public ShoppingCart getShoppingCart() {
-        return this.shoppingCart;
+        return shoppingCart;
     }
 
     public void pay() {
         ShoppingCart newCart = new ShoppingCart(this);
         PriceList priceList = PriceList.getInstance();
-
         for (Flower flower : this.shoppingCart.getContents()) {
-            try {
-                double pricePerFlower = priceList.getPrice(flower);
-                double pricePerFlowerPack = flower.getQuantity() * pricePerFlower;
+            double pricePerFlower = priceList.getPrice(flower);
+            double pricePerFlowerPack = flower.getQuantity() * pricePerFlower;
 
-                if (this.cash - pricePerFlowerPack >= 0) {
-                    this.cash -= pricePerFlowerPack;
-                    newCart.putInsideFlower(flower);
-                }
-            } catch (Exception e) {
+            if (isPriceDefined(pricePerFlower) && hasEnoughCash(pricePerFlowerPack)) {
+                cash -= pricePerFlowerPack;
+                newCart.putInsideFlower(flower);
             }
         }
+        shoppingCart = newCart;
+    }
 
-        this.shoppingCart = newCart;
+    private boolean hasEnoughCash(double pricePerFlowerPack) {
+        return cash - pricePerFlowerPack >= 0;
+    }
+
+    private boolean isPriceDefined(double pricePerFlower) {
+        return pricePerFlower > 0;
     }
 
     public double getCash() {
