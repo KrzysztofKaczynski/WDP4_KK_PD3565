@@ -5,15 +5,15 @@ package zad3;
  */
 abstract public class Flower {
     protected int quantity;
-    protected String colour;
+    protected String color;
     protected String name;
 
     public String getName() {
         return this.name;
     }
 
-    public String getColour() {
-        return this.colour;
+    public String getColor() {
+        return this.color;
     }
 
     public int getQuantity() {

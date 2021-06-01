@@ -11,9 +11,7 @@ public class PriceList {
     private static PriceList instance = null;
     private Map<String, Double> flowerMap = new HashMap<>();
 
-    private PriceList() {
-
-    }
+    private PriceList() {}
 
     public static PriceList getInstance() {
         if (instance == null) {
@@ -28,23 +26,31 @@ public class PriceList {
 
     public double getPrice(Flower flower) {
         String name = flower.getName();
-        //AG: lepiej od razu zwróciæ -1.0 ni¿ rzucaæ wyj¹tek i obs³ugiwaæ go w try/catch. Tak proœciej i przejrzyœciej.
+
         if (!flowerMap.containsKey(name)) {
             return -1.0;
         }
         return flowerMap.get(name);
     }
 
-    public double getPriceOfFlowerWithSpecificColour(List<Flower> flowers, String color) {
-        int sum = 0;
+    public double getTotalPrice(Flower flower) {
+        double price = getPrice(flower);
+
+        if (price < 0.0) {
+            return -1.0;
+        }
+
+        return price * flower.getQuantity();
+    }
+
+    public int getPriceOfFlowerWithGivenColor(List<Flower> flowers, String color) {
+        double sum = 0.0;
         for (Flower flower : flowers) {
-            //AG: ³atwiej zrobiæ na warunku gdy kolor siê zgadza. Dodatkowo ignoreCase powoduje ¿e wielkoœæ liter nie ma znaczenia
-            if (flower.getColour().equalsIgnoreCase(color)) {
-                double pricePerFlower = getPrice(flower);
-                double pricePerFlowerPack = flower.getQuantity() * pricePerFlower;
-                sum += pricePerFlowerPack;
+            if (flower.getColor().equalsIgnoreCase(color)) {
+                sum += getTotalPrice(flower);
             }
         }
-        return sum;
+
+        return (int) sum;
     }
 }

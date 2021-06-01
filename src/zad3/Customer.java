@@ -31,11 +31,9 @@ public class Customer {
         ShoppingCart newCart = new ShoppingCart(this);
         PriceList priceList = PriceList.getInstance();
         for (Flower flower : this.shoppingCart.getContents()) {
-            double pricePerFlower = priceList.getPrice(flower);
-            double pricePerFlowerPack = flower.getQuantity() * pricePerFlower;
-
-            if (isPriceDefined(pricePerFlower) && hasEnoughCash(pricePerFlowerPack)) {
-                cash -= pricePerFlowerPack;
+            double totalPrice = priceList.getTotalPrice(flower);
+            if (isPriceDefined(totalPrice) && hasEnoughCash(totalPrice)) {
+                cash -= totalPrice;
                 newCart.putInsideFlower(flower);
             }
         }
@@ -43,7 +41,7 @@ public class Customer {
     }
 
     private boolean hasEnoughCash(double pricePerFlowerPack) {
-        return cash - pricePerFlowerPack >= 0;
+        return cash >= pricePerFlowerPack;
     }
 
     private boolean isPriceDefined(double pricePerFlower) {

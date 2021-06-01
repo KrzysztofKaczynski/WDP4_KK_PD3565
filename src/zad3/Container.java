@@ -12,7 +12,6 @@ abstract public class Container {
     protected ArrayList<Flower> flowersInside;
     protected String containerName;
 
-
     public Container(Customer owner, String containerName) {
         this.owner = owner;
         flowersInside = new ArrayList<>();
@@ -23,7 +22,6 @@ abstract public class Container {
         flowersInside.add(flower);
     }
 
-
     public List<Flower> getContents() {
         return Collections.unmodifiableList(flowersInside);
     }
@@ -31,7 +29,7 @@ abstract public class Container {
     public String toString() {
         String content = containerName + " właściciel " + owner.getName();
         if (flowersInside.isEmpty()) {
-            content += "  -- pusto";
+            content += " -- pusto";
         } else {
             PriceList priceList = PriceList.getInstance();
             for (Flower flower : flowersInside) {
@@ -39,7 +37,7 @@ abstract public class Container {
                 price = priceList.getPrice(flower);
                 content += "\n";
                 content += flower.getName();
-                content += ", kolor: " + flower.getColour();
+                content += ", kolor: " + flower.getColor();
                 content += ", ilość " + flower.getQuantity();
                 content += ", cena " + price;
             }
@@ -53,5 +51,6 @@ abstract public class Container {
 
     public void pack(Container container) {
         container.packAll(flowersInside);
+        flowersInside = new ArrayList<>();
     }
 }

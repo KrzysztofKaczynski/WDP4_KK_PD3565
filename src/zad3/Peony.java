@@ -7,6 +7,6 @@ public class Peony extends Flower {
     public Peony(int quantity) {
         this.quantity = quantity;
         this.name = "piwonia";
-        this.colour = "czerwony";
+        this.color = "czerwony";
     }
 }

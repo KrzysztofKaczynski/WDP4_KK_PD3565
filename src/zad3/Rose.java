@@ -7,6 +7,6 @@ public class Rose extends Flower {
     public Rose(int quantity) {
         this.quantity = quantity;
         this.name = "róża";
-        this.colour = "czerwony";
+        this.color = "czerwony";
     }
 }

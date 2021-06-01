@@ -14,8 +14,7 @@ public class FloristsTest {
     static int valueOf(Box box, String color) {
         PriceList priceList = PriceList.getInstance();
         List<Flower> flowers = box.getContents();
-        return (int) priceList.getPriceOfFlowerWithSpecificColour(flowers, color);
-
+        return priceList.getPriceOfFlowerWithGivenColor(flowers, color);
     }
 
     public static void main(String[] args) {
@@ -38,7 +37,7 @@ public class FloristsTest {
         // Pewnie je umieścił na wózku sklepowyem
         // Zobaczmy co tam ma
         ShoppingCart wozekJanka = janek.getShoppingCart();
-        System.out.println("Przed płaceniem\n" + wozekJanka);
+        System.out.println("Przed płaceniem " + wozekJanka);
 
         // Teraz za to zapłaci...
         janek.pay();
@@ -48,7 +47,7 @@ public class FloristsTest {
         // W takim arzie zostałyby usunięte z wózka i Janek nie płaciłby za nie
         // Również może mu zabraknąc pieniędzy, wtedy też kwaity są odkładane.
 
-        System.out.println("Po zapłaceniu\n" + janek.getShoppingCart());
+        System.out.println("Po zapłaceniu " + janek.getShoppingCart());
 
         // Ile Jankowi zostało pieniędzy?
         System.out.println("Jankowi zostało : " + janek.getCash() + " zł");
@@ -59,7 +58,7 @@ public class FloristsTest {
 
         // Co jest teraz w wózku Janka...
         // (nie powinno już nic być)
-        System.out.println("Po zapakowaniu do pudełka\n" + janek.getShoppingCart());
+        System.out.println("Po zapakowaniu do pudełka " + janek.getShoppingCart());
 
         // a co w pudełku
         System.out.println(pudelkoJanka);
